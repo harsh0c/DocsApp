@@ -48,8 +48,20 @@ const completed= async(req,res)=>{
     }
 }
 
+const deleted=async(req,res)=>{
+    try {
+        const result = await Appointment.findByIdAndDelete(req.body.userId);  // app
+
+        return res.send("Appointment deleted successfully");
+    } catch (error) {
+        console.log("delerror" + error);
+        res.status(500).send("Unable to delete appointment");
+    }
+}
+
 module.exports={
     bookappointment,
     getallappointments,
     completed,
+    deleted,
 }

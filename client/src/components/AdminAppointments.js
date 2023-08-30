@@ -50,6 +50,41 @@ const AdminAppointments = () => {
     }
   };
 
+  const deleteApp=async(userId)=>{
+    try {
+      const confirm = window.confirm("Are you sure you want to delete?");
+      if(confirm){
+        const { data } = await toast.promise(
+          axios.delete(
+            "/api/appointment/deleted",
+            // {
+            //   appointid: ele?._id,
+            //   doctorId: ele?.doctorId._id,
+            //   doctorname: `${ele?.userId?.firstname} ${ele?.userId?.lastname}`,
+            // },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+              data: { userId }
+            }
+          ),
+          {
+            pending: "Deleting in...",
+            success: "Appointment deleted successfully",
+            error: "Unable to delete appointment",
+            loading: "Deleting appointment...",
+          }
+        );
+  
+        getAllAppoint();
+      }
+    } catch (error) {
+      console.log("ErrorDel: "+error);
+      return error;
+    }
+  }
+
   return (
     <>
       <section className="user-section">
@@ -98,6 +133,16 @@ const AdminAppointments = () => {
                             onClick={() => complete(ele)}
                           >
                             Complete
+                          </button>
+                        
+                          <button
+                            className={`btn user-btn delete-btn ${
+                              ele?.status === "Completed" ? "disable-btn" : ""
+                            }`}
+                            disabled={ele?.status === "Completed"}
+                            onClick={() => deleteApp(ele?._id)}
+                          >
+                            Delete
                           </button>
                         </td>
                       </tr>

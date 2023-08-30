@@ -71,8 +71,8 @@ const deleteuser = async (req, res) => {
       });
       return res.send("User deleted successfully");
     } catch (error) {
-        console.log("err "+error);
-      res.status(500).send("Unable to delete user");
+        // console.log("err "+error);
+        res.status(500).send("Unable to delete user");
     }
 };
 

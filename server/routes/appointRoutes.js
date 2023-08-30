@@ -18,4 +18,6 @@ appointRouter.post(
 
 appointRouter.put("/completed", auth, appointmentController.completed);
 
+appointRouter.delete("/deleted", auth, appointmentController.deleted);
+
 module.exports = appointRouter;
